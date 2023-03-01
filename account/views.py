@@ -1,5 +1,5 @@
 from rest_framework.views import APIView
-from account.serializers import RegisterSerializer
+from account.serializers import RegisterSerializer, ForgotPasswordSerializer, ForgotPasswordCompleteSerializer
 from rest_framework.response import Response
 from django.contrib.auth import get_user_model
 
@@ -28,6 +28,19 @@ class ActivationView(APIView):
             return Response('Link expired', status=400)
 
 
+class ForgotPasswordAPIView(APIView):
+    def post(self, request):
+        serializer = ForgotPasswordSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.send_reset_password_code()
+        return Response('Вам успешно улетело письмо для восстановления пароля!')
+
+class ForgotPasswordCompleteAPIView(APIView):
+    def post(self, request):
+        serializer = ForgotPasswordCompleteSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.set_new_password()
+        return Response('Братаааан пароль успешно обновлен!1!1!')
 
 
 
