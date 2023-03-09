@@ -4,4 +4,7 @@ psycopg2-binary
 python-decouple
 pillow
 djangorestframework-simplejwt
-dj-config-url 
+django-config-url 
+django-cors-headers
+redis
+celery
